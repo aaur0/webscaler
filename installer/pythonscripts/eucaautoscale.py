@@ -16,7 +16,6 @@ import ConfigParser,io,traceback
 
 class AWS():    
     keyfilepath = '/root/installer/key/'    
-    #SSH_OPTS      = '-o StrictHostKeyChecking=no -i /root/installer/pythonscripts/akg.pem'
     prefix = "/root/"
     COPY_DIRS     = ['/root/installer', '/root/userfiles']
     instancesize = {0:"m1.small",1:"m1.large", 2:"m1.xlarge"}
@@ -38,8 +37,7 @@ class AWS():
             else:
                 logging.error("Config file doesn't exists")
                 os.sys.exit(1)   
-            self.keyfilename=self.config.get("euca", "keyfilename")            
-            #self.SSH_OPTS = self.config.get("euca","SSH_OPTS")
+            self.keyfilename=self.config.get("euca", "keyfilename")
             self.keyfilefullpath = "%s/%s" % (self.keyfilepath, self.keyfilename)
             self.SSH_OPTS  = '-o StrictHostKeyChecking=no -i %s' % self.keyfilefullpath
             self.conn = self.connect()              
@@ -90,8 +88,7 @@ class AWS():
             time.sleep(20) # Sleep so Amazon recognizes the new instance
             while not instance.update() == 'running':
                 time.sleep(5) # Let the instance start up               
-            # hack to repopulate the instance object as IP Address doesn't get populated in the first run           
-            
+            # hack to repopulate the instance object as IP Address doesn't get populated in the first run
             if(instance == None):
                 logging.error("The instance object is returned as None..")
                 sys.exit(1)      
@@ -126,8 +123,6 @@ class AWS():
                     logging.debug("Copying Dir : %s " ,copy_dir)
                     command = "scp -r  {0} {1} root@{2}:/root".format(self.SSH_OPTS, copy_dir, dnsname)
                     logging.debug("Using command = %s", command)
-                    #command = "rsync -e \"ssh {0}\" -avz {2} root@{1}:{3}/ > /root/logs/rsynclogfile 2>&1".format(self.SSH_OPTS, dnsname, copy_dir,"/root")
-                    print command
                     logging.debug("Command Executed : %s", command)           
                     os.system(command)                   
                 logging.debug("Calling Script File to install %s " , instancetype)        
@@ -152,34 +147,35 @@ class AWS():
             # this block would be the first block to be called for installing all the basic requirements of the system
             # 1. create a directory for the scripts
             # 2. execute the scripts
-            command = "mkdir {0}".format(self.filesdir)
-            print "Executing command : ".format(command)
-            self.execute(self.conn, instance, command)
-            print "Executed command successfully"   
+            command = "mkdir {0}".format(self.filesdir)            
+            self.execute(self.conn, instance, command)            
             # 2. copy the files from local to remote machines
             for copy_dir in self.COPY_DIRS:
-                os.system(command)
-            print 'File Copy completed.'           
+                os.system(command)            
             # execute the scripts
     
     def isinstanceready(self,conn,id):
         logging.info("Inside is instance ready Method")
         time.sleep(10)
-        instance = self.getinstancebyid(conn, id)
-        if(instance.dns_name <> "0.0.0.0"):
-            logging.info("Dns has been populated.")
-            return True
-        retrycount = 5        
-        while(retrycount):
-            logging.debug("Unable to fetch instance object. Retry will be attempted after 5 seconds.")            
-            time.sleep(10)
+        try:
             instance = self.getinstancebyid(conn, id)
-            if((instance.dns_name <> "0.0.0.0")):                
-                logging.debug("exiting isinstancereadymethod: Instance having dns %s found.",instance.dns_name)
+            if(instance.dns_name <> "0.0.0.0"):
+                logging.info("Dns has been populated.")
                 return True
-            retrycount = retrycount - 1
-        logging.error("Instance couldn't be started. Either increase the time our or check for errors")
-        return False   
+            retrycount = 5        
+            while(retrycount):
+                logging.debug("Unable to fetch instance object. Retry will be attempted after 5 seconds.")            
+                time.sleep(10)
+                instance = self.getinstancebyid(conn, id)
+                if((instance.dns_name <> "0.0.0.0")):                
+                    logging.debug("exiting isinstancereadymethod: Instance having dns %s found.",instance.dns_name)
+                    return True
+                retrycount = retrycount - 1
+            logging.error("Instance couldn't be started. Either increase the time our or check for errors")
+            return False
+        except Exception,e:
+            logging.error("Error in isinsatnceready method. Details : %s", e)
+            os.sys.exit(1)               
             
      
     def issshportopen(self,address):
@@ -220,8 +216,7 @@ class AWS():
         self.execute(conn, instance, 'sudo {0}/{1}'.format(deploymentpath,self.iscripts[type]))        
         if(type == "php"):
             self.execute(conn, instance, 'sudo cp ./anand3/copyfiles/index.php /var/www')
-            command = r"curl http://{0}/{1}".format(instance.dns_name,'index.php')
-            print command
+            command = r"curl http://{0}/{1}".format(instance.dns_name,'index.php')            
             os.system(command)            
             
                 
@@ -307,26 +302,26 @@ class AWS():
                 logging.debug("Execution result : %s" , str(data))
                 return data            
             except paramiko.ChannelException,connectionfailed:
-                logging.error("Connection Cannot be Established %s" % str(connectionfailed))
+                logging.error("Connection Cannot be Established %s" , str(connectionfailed))
                 retrycount = retrycount - 1            
                 logging.debug("Retrying to establish connection.  Attempt Number :  %s" , 3-retrycount)    
                 time.sleep(retrycount*5)
             except paramiko.AUTH_FAILED,authfailed:
-                logging.error("Authentication Error : %s" % str(authfailed))
+                logging.error("Authentication Error : %s" , str(authfailed))
                 retrycount = retrycount - 1
-                logging.info("Retrying to establish connection.  Attempt Number :  %s" % (3-retrycount)) 
+                logging.info("Retrying to establish connection.  Attempt Number :  %s" , (3-retrycount)) 
                 time.sleep(retrycount*5)
             except Exception,e:
-                logging.error("Exception : %s " % e)
+                logging.error("Exception : %s " , e)
                 if(e.errno == 110):
                     logging.error("Connection timed out to the client. Retry will be attempted.")
                     retrycount = retrycount - 1            
-                    logging.debug("Retrying to establish connection.  Attempt Number :  %s" % (3-retrycount))    
+                    logging.debug("Retrying to establish connection.  Attempt Number :  %s" , (3-retrycount))    
                     time.sleep(retrycount*5)
                 if(e.errno == 111):
                     logging.error("Connection Refused. Retry will be attempted.")
                     retrycount = retrycount - 1            
-                    logging.debug("Retrying to establish connection.  Attempt Number :  %s" % (3-retrycount))    
+                    logging.debug("Retrying to establish connection.  Attempt Number :  %s" , (3-retrycount))    
                     time.sleep(retrycount*5)        
                 else:
                     logging.error("Unknown Exception has occured. System will halt.")
@@ -369,16 +364,16 @@ class AWS():
                     splittedline = line.split(',')
                     if splittedline:    
                         if splittedline[0] ==  'web-farm' and splittedline[1] ==  'BACKEND':                        
-                            logging.debug("Number of Queued Request : " + str(splittedline[2]))
+                            logging.debug("Number of Queued Request : %s " , str(splittedline[2]))
                             queuelen = int(splittedline[2])
-                            logging.debug("Max Queued Request " + str(splittedline[3]))                        
+                            logging.debug("Max Queued Request: %s ", str(splittedline[3]))                        
                             #block to decide upscaling                            
                             if( queuelen > self.upscalethreshold):
                                 #insert code for creation of new instance                            
                                 # create new instance                   
                                 logging.debug("Upscale Criteria Satisfied.")         
                                 emailid = self.db.getemailbydns(dns)
-                                logging.info("Email id fetched : " + str(emailid))
+                                logging.info("Email id fetched : %s", str(emailid))
                                 logging.info("Triggering Upscale: New instance of type PHP will be created.")
                                 self.createInstance(self.conn, 1, emailid.strip(), "php")
                                 # notify haproxy and restart it
@@ -395,7 +390,7 @@ class AWS():
                                     self.timer = datetime.now()
                                 else:
                                     check = datetime.now() - timedelta(minutes = self.downscaletime) > self.timer
-                                    logging.debug("Down Scale Check : " + str(check))
+                                    logging.debug("Down Scale Check : %s" , str(check))
                                     if (datetime.now() - timedelta(minutes = self.downscaletime) > self.timer):
                                         emailid = self.db.getemailbydns(dns)
                                         phpinstancecount = self.db.getinstancecount(emailid, "php")
@@ -569,13 +564,10 @@ class AWS():
              
         
 if __name__ == "__main__":
-    #formatter = logging.Formatter('[%(levelname)s] %(asctime)-15s %(clientip)s %(user)-8s %(message)s')
-    #FORMAT = '%(asctime)-15s %(clientip)s %(user)-8s %(message)s'    
     logging.basicConfig(filename='python.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')    
     logging.getLogger('boto').setLevel(logging.CRITICAL)
     logging.getLogger('paramiko').setLevel(logging.CRITICAL)
-    aws = AWS()
-    #conn=aws.connect('UQ8GATqwbQT6v1yAvg9R3EJzZdvfPeFyDiRg', 'hGe4WCORyqEEFPRZfM7dLPqvH607IsH1a1nZw')        
+    aws = AWS()            
     if aws == None:
         print "Cannot connect to ec2"
         sys.exit(0)
@@ -596,12 +588,9 @@ if __name__ == "__main__":
             type = str(sys.argv[3])
             size = int(sys.argv[4])         
             instance = aws.createInstance(size,name,type)
-            tags = {"name":name}
-            aws.taginstance(instance, tags)
-            print instance.dns_name ,"created"
-        except Exception,e:
-            print e
-            logging.error("Exception in create command . Error : " + str(e))
+            logging.debug("%s is created and is of type %s",instance.dns_name ,type)
+        except Exception,e:            
+            logging.error("Exception in create command . Error : %s" , str(e))
             sys.exit(1)   
                  
     if (command == "monitor"):                
@@ -609,6 +598,7 @@ if __name__ == "__main__":
         aws = AWS()
         if (len(sys.argv) < 3):
             print "Invalid Command Arguments passed for monitor command. It should be of type  monitor  <DNS/IP Of Instance> <Stat Type> "
+            os.sys.exit(1)
         dns = str(sys.argv[2])
         stattype = str(sys.argv[3])
         while(True):

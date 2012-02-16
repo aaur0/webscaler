@@ -7,21 +7,19 @@ from cStringIO import StringIO
 from time import time
 from traceback import format_exc
  
-logger = logging.getLogger(__name__)
- 
 class HAProxyStats(object):
-    """ Used for communicating with HAProxy through its local UNIX socket interface.
-    """
+    """ Used for communicating with HAProxy through its local UNIX socket interface.    """
     
     
     def __init__(self, socket_name=None):
         self.socket_name = socket_name
+        logging.basicConfig(filename='/root/logs/python.log',level=logging.DEBUG)
  
     def execute(self, command, extra="", timeout=200):
         """ Executes a HAProxy command by sending a message to a HAProxy's local
         UNIX socket and waiting up to 'timeout' milliseconds for the response.
         """
- 
+        logging.info("inside HAProxyStats:Execute method")
         if extra:
             command = command + ' ' + extra
  
@@ -42,8 +40,7 @@ class HAProxyStats(object):
                     return buff.getvalue()
         except Exception, e:
             msg = 'An error has occurred, e=[{e}]'.format(e=format_exc(e))
-            logger.error(msg)
-            raise
+            logging.error("error in haxproxystat:execute method : %s", msg)          
         
         client.close()
 
@@ -53,12 +50,11 @@ class HAProxyStats(object):
  
     
 if __name__ == '__main__': 
-    stats = HAProxyStats('/home/ubuntu/haproxy.sock')
+    stats = HAProxyStats('/root/haproxy.sock')
     if (sys.argv[1] == 'info'):
         info = stats.execute('show info')
         print(info) 
     if (sys.argv[1] == 'stat'):
         stat = stats.execute('show stat')
         print(stat) 
-    #sess = stats.execute('show sess', '0x19e8fd0', 20)
-    #print(sess)
+    

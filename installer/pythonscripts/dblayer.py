@@ -2,22 +2,21 @@ import MySQLdb
 import logging
 
 class dblayer():
-    conn = None
-    #mysqlip = "10.123.25.204"
-    mysqlip = <IPADDRESS>        
-    password = <PASSWORD>
-    username = <USERNAME> 
+    conn = None    
+    mysqlip = <IPADDRESS>   #private ip of the deployment server        
+    password = 'root'
+    username = 'root' 
     dbname = "db"
     table = "instances"
     logging = None
     def __init__(self):
         try:            
-            logging.basicConfig(filename='python.log',level=logging.DEBUG)
+            logging.basicConfig(filename='/root/logs/python.log',level=logging.DEBUG)
             logging.debug("Creating Mysql Connection")
             self.conn = MySQLdb.connect(self.mysqlip, self.username, self.password, self.dbname)
             logging.debug("Mysql Connection Successful")            
         except Exception,e:
-            logging.error("Mysql Connection cannot be created. Error : %s" % e) 
+            logging.error("Mysql Connection cannot be created. Error : %s", e) 
             return None
         
     def __del__(self):
@@ -35,7 +34,7 @@ class dblayer():
             return False 
     
     def createdbinstance(self,email, dns, ip, type):
-        logging.info("Inside createinstance Method")
+        logging.info("Inside dblayer:createinstance Method")
         try: 
             sql = """INSERT INTO %s (email,dns,ip,type) VALUES ('%s', '%s', '%s', '%s')""" % (self.table,email,dns,ip,type)
             logging.debug("SQL Query : %s", sql)
@@ -44,11 +43,11 @@ class dblayer():
             self.conn.commit()
             return True
         except Exception, e:
-            logging.error("Entry Cannot be added to table. Details : %s" % e)
+            logging.error("Entry Cannot be added to table. Details : %s", e)
             return False
         
     def getinstancecount(self,email,type):
-        logging.info("Insde get instance count method")
+        logging.info("Inside dblayer:getinstancecount method")
         try:    
             command = ""        
             if(type=="all"):
@@ -59,18 +58,20 @@ class dblayer():
             cursor.execute(command)
             dataset = cursor.fetchall()
             if(dataset):
-                return int(dataset[0][0])
+                logging.debug("Number of instance returned is %s", str(dataset[0][0]))
+                return int(dataset[0][0])            
             else:
+                logging.debug("Number of instance returned is 0")
                 return 0                  
         except Exception, e:
-            logging.error("The number of instance couldn't be retrieved. Error: %s " % str(e))
+            logging.error("The number of instance couldn't be retrieved. Error: %s " , str(e))
             return None
     
 
     def getinstancesbytype(self,email,type):
         logging.info("Inside getinstancesbytype method")
         try:    
-            logging.debug("Email specified : "+email + " Type specified as : "+type)
+            logging.debug("Email specified :  %s and Type specified as : %s", email, type)
             command = "select dns from %s where email=\'%s\' and type=\'%s\'" % (self.table, email, type)
             cursor = self.conn.cursor()        
             cursor.execute(command)
@@ -83,7 +84,7 @@ class dblayer():
             else:               
                 return None                  
         except Exception, e:
-            logging.error("The email id of customer couldn't be retrieved. Error: %s " % str(e))
+            logging.error("The email id of customer couldn't be retrieved. Error: %s " , str(e))
             return None
 
     def deleteinstancebydns(self,dns):
@@ -96,7 +97,7 @@ class dblayer():
             self.conn.commit()
             return True                  
         except Exception, e:
-            logging.error("The email id of customer couldn't be retrieved. Error: %s " % str(e))
+            logging.error("The email id of customer couldn't be retrieved. Error: %s ", str(e))
             return None
     
     def getemailbydns(self,dnsname):
@@ -112,7 +113,7 @@ class dblayer():
             else:               
                 return 0                  
         except Exception, e:
-            logging.error("The email id of customer couldn't be retrieved. Error: %s " % str(e))
+            logging.error("The email id of customer couldn't be retrieved. Error: %s ", str(e))
             return None
      
 
