@@ -9,7 +9,7 @@ logPath=$homeDir"/logs/mysqlinstall.log"
 #  fi
 # }
 
-sqlFile="$homeDir/userfiles/"$1"/customer.sql"
+sqlFile="$homeDir/userfiles/"$1"/tables.sql"
 #sudo chmod 777 $sqlFile
 dataFile="$homeDir/userfiles/"$1"/data.sql"
 #sudo chmod 777 $dataFile

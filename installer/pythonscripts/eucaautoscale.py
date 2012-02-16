@@ -40,8 +40,8 @@ class AWS():
                 os.sys.exit(1)   
             self.keyfilename=self.config.get("euca", "keyfilename")            
             #self.SSH_OPTS = self.config.get("euca","SSH_OPTS")
-            keyfilefullpath = "%s/%s" % (self.keyfilepath, self.keyfilename)
-            self.SSH_OPTS  = '-o StrictHostKeyChecking=no -i %s' % keyfilefullpath
+            self.keyfilefullpath = "%s/%s" % (self.keyfilepath, self.keyfilename)
+            self.SSH_OPTS  = '-o StrictHostKeyChecking=no -i %s' % self.keyfilefullpath
             self.conn = self.connect()              
             self.upscalethreshold=self.config.get("euca", "upscalethreshold")
             self.downscaletime=self.config.get("euca", "downscaletime")
@@ -189,8 +189,8 @@ class AWS():
             try:
                 ssh = paramiko.SSHClient()
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                logging.info("Trying to connect to the instance %s as user: root with key file %s",address,self.keyfile)
-                ssh.connect(address, username="root", key_filename=self.keyfile)
+                logging.info("Trying to connect to the instance %s as user: root with key file %s",address,self.keyfilefullpath)
+                ssh.connect(address, username="root", key_filename=self.keyfilefullpath)
                 logging.debug("SSH Connection Successful")
                 return True
             except paramiko.ChannelException,connectionfailed:
@@ -299,12 +299,12 @@ class AWS():
                 logging.debug("trying to setup SSH Connection")
                 ssh = paramiko.SSHClient()
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                ssh.connect(instance.dns_name, username="root", key_filename=self.keyfile)
+                ssh.connect(instance.dns_name, username="root", key_filename=self.keyfilefullpath)
                 logging.debug("SSH Connection Successful")
                 logging.debug("Executing Command " + command)
                 stdin, stdout, stderr = ssh.exec_command(command)                
                 data =  stdout.readlines()                
-                logging.debug("Execution result : " + str(data))
+                logging.debug("Execution result : %s" , str(data))
                 return data            
             except paramiko.ChannelException,connectionfailed:
                 logging.error("Connection Cannot be Established %s" % str(connectionfailed))
@@ -358,7 +358,7 @@ class AWS():
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
             logging.debug("Trying to connect to EC2 instance")
-            ssh.connect(dns, username="root", key_filename=self.keyfile)
+            ssh.connect(dns, username="root", key_filename=self.keyfilefullpath)
             stdin, stdout, stderr = ssh.exec_command(cmd)
             logging.debug("Successfully connected to EC2 instance")
             logging.debug("Fetching stats for instance")

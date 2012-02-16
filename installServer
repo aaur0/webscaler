@@ -71,7 +71,7 @@ fi
    echo "[Error]: $homeDir/installer does not exists" >> $logPath
   fi
 
-   sqlFile="$homeDir/userfiles/customer.sql"
+   sqlFile="$homeDir/userfiles/tables.sql"
    sudo chmod 777 $sqlFile
    dataFile="$homeDir/userfiles/data.sql"
    sudo chmod 777 $dataFile
