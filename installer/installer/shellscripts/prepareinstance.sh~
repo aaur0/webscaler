@@ -1,0 +1,6 @@
+sudo apt-get install subversion
+sudo apt-get install socat
+sudo svn checkout https://github.com/boto/boto/trunk
+cd trunk/
+sudo python setup.py install
+chmod 600 /home/ubuntu/installer/pythonscripts/ag2.pem

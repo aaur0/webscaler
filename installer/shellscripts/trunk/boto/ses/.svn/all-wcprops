@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/boto/boto/!svn/ver/2659/trunk/boto/ses
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/boto/boto/!svn/ver/1/trunk/boto/ses/__init__.py
+END
+connection.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/2659/trunk/boto/ses/connection.py
+END
+exceptions.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/2659/trunk/boto/ses/exceptions.py
+END

@@ -1,0 +1,77 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/boto/boto/!svn/ver/1/trunk/tests/s3
+END
+test_gsconnection.py
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_gsconnection.py
+END
+test_https_cert_validation.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_https_cert_validation.py
+END
+test_pool.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_pool.py
+END
+test_resumable_downloads.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_resumable_downloads.py
+END
+test_encryption.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_encryption.py
+END
+other_cacerts.txt
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/boto/boto/!svn/ver/1/trunk/tests/s3/other_cacerts.txt
+END
+mock_storage_service.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/boto/boto/!svn/ver/1/trunk/tests/s3/mock_storage_service.py
+END
+test_connection.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_connection.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/boto/boto/!svn/ver/1/trunk/tests/s3/__init__.py
+END
+cb_test_harnass.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/tests/s3/cb_test_harnass.py
+END
+test_versioning.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_versioning.py
+END
+test_resumable_uploads.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/boto/boto/!svn/ver/1/trunk/tests/s3/test_resumable_uploads.py
+END

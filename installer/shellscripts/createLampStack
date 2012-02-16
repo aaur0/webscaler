@@ -1,0 +1,47 @@
+#! /bin/sh
+
+if [ $# -ne 4 ]
+then
+echo "Execute script as ./<ScriptName> create <customerName> <installable-File-Path> <Size>"
+exit
+fi
+customerName=$2
+path=$3
+size=$4
+#homeDir=`echo $HOME`
+homeDir="/root"
+if [ -e "$homeDir/installer/shellscripts/instances.dat" ]
+then
+  `sudo rm  $homeDir/installer/shellscripts/instances.dat`
+fi
+chmod 600 $homeDir/installer/key/anand2.key
+cp -r /var/www/files/$customerName $homeDir/userfiles/
+rm -rf /var/www/files/$customerName
+
+cmd="python "$path"/eucaautoscale.py create "$customerName" mysql "$size
+#echo "Creating Mysql Server\n "
+var=`$cmd`
+echo $var
+#echo "Created MySql Server " >>/tmp/outputfile
+
+cmd="python "$path"/eucaautoscale.py create "$customerName" php "$size
+#echo "Creating WebServer1 "$cmd >>  /tmp/outputfile
+var=`$cmd`
+echo $var
+#echo "Created WebServer1 Server " >>/tmp/outputfile
+
+cmd="python "$path"/eucaautoscale.py create "$customerName" php "$size
+#echo "Creating WebServer2 "$cmd >>  /tmp/outputfile
+var=`$cmd`
+echo $var
+#echo "Created WebServer2 Server " >>/tmp/outputfile
+
+perl $homeDir/installer/shellscripts/haProxyConfig
+
+cmd="python "$path"/eucaautoscale.py create "$customerName" lb "$size
+#echo "Creating LoadBalancer "$cmd >>  /tmp/outputfile
+var=`$cmd`
+echo $var
+#echo "Created LoadBalancer Server " >>/tmp/outputfile
+
+rm -rf $homeDir/userfiles/$customerName

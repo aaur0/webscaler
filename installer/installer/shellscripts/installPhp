@@ -1,0 +1,47 @@
+#!/bin/sh
+##########################################################################
+#This script installs PHP web server and deploy the customer artifacts...
+#
+##########################################################################
+logPath="/home/ubuntu/phpinstall.log"
+errorlog() {
+
+   error=`cat $logPath | egrep "Unable|Invalid|Error" | wc -l`
+   if [ $error -ne 0 ]
+   then
+    echo "[Error while executing $1] .Please look into phpinstall.log for details"
+  fi
+ }
+
+
+  sudo apt-get update --assume-yes > $logPath 2>&1                ### Executing Update
+  errorlog "apt-get update"
+  sudo apt-get install php5 --assume-yes >> $logPath 2>&1        ### Installing PHP5
+  errorlog "apt-get install php5" 
+  sudo apt-get install php5-mysql  --assume-yes >> $logPath 2>&1  ### Installing Php5-mysql
+  errorlog "apt-get install php5-mysql"
+  sudo dpkg-reconfigure php5-mysql   >> $logPath 2>&1             ### depkging 
+  errorlog "dpkg-reconfiguree php5-mysql"
+  sudo chmod 777 /etc/apt/sources.list                                   
+  sudo sed 's/$/ multiversal/g' /etc/apt/sources.list > sources.list_temp   ### Editing sources.list. Adding multiversal
+  sudo sed 's/^ multiversal$//g' sources.list_temp > /etc/apt/sources.list 
+  sudo chmod 644 /etc/apt/sources.list       ### Restoring the file permission
+
+  sudo cp -r /home/ubuntu/userfiles/* /var/www/
+  sudo chmod 777 /var/www/*
+  sudo chmod 777 /home/ubuntu/installer/shellscripts/instances.dat
+  sudo rm /var/www/index.html  ### removing the default index.html
+  sudo mkdir /var/www/files  #### creating /var/www/files to store the user scripts
+  sudo /home/ubuntu/installer/shellscripts/deployScript /home/ubuntu/userfiles/UserScripts.tar /var/www/   ### Copying scripts in /var/www
+
+  sudo /home/ubuntu/installer/shellscripts/updateConfig /var/www/dbconfig.php  /home/ubuntu/installer/shellscripts/instances.dat ###updating dbconfig.php with database private ip
+  sudo chmod 777 /var/www/*    ### setting 777 in /var/www
+
+  sudo /etc/init.d/apache2 restart   >> $logPath 2>&1   ### Restarting apache
+
+  error=`cat phpinstall.log | egrep "Unable|Invalid|Error" | wc -l`
+  if [ $error -eq 0 ]
+  then
+    echo "PHP webserver has been installed successfully"
+  fi
+

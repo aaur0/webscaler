@@ -1,0 +1,82 @@
+#!/bin/sh
+homeDir="/root"
+logPath="$homeDir/logs/haproxyinstall.log"
+#errorlog() {
+
+#   error=`cat $logPath | egrep "Unable|Invalid|Error" | wc -l`
+#   if [ $error -ne 0 ]
+#   then
+#    echo "[Error while executing $1] .Please look into $logPath for details"
+#  fi
+# }
+ 
+ if [ -e "$homeDir/installer/shellscripts/prepareinstance.sh" ]
+ then
+     sudo $homeDir/installer/shellscripts/prepareinstance.sh
+ else
+    echo "[Error] $homeDir/installer/shellscripts/prepareinstance.sh is not present" >> $logPath    
+ fi
+
+ if [ -e "/etc/haproxy/haproxy.cfg" ]
+ then
+    isInstalled=1
+ else
+    isInstalled=0
+ fi
+ 
+ if [ $isInstalled -eq 0 ]
+ then
+  sudo apt-get update --assume-yes >> $logPath 2>&1                ### Executing Update
+  #errorlog "apt-get update"
+  sudo apt-get install haproxy --assume-yes >>$logPath 2>&1        ### Installing haproxy
+  #errorlog "apt-get install haproxy" 
+  sudo chmod 777  /etc/apt/sources.list
+  sed 's/$/ multiversal/g' /etc/apt/sources.list > sources.list_temp   ### Editing sources.list adding multiversal
+  sed 's/^ multiversal$//g' sources.list_temp > /etc/apt/sources.list 
+ 
+  dns=`grep lb $homeDir/installer/shellscripts/instances.dat  | cut -d" " -f1`
+  echo "Writing lb_monitor daemon for instance: "$dns >>$logPath 2>&1
+  sed -e 's#<LB_DNS>#'$dns'#g' $homeDir/installer/shellscripts/lb_monitor.conf > tmp
+  sudo chmod 644  tmp
+  sudo chown root:root tmp
+  sudo cp tmp /etc/init/lb_monitor.conf
+  sudo rm tmp
+  sudo start lb_monitor >>$logPath 2>&1
+ 
+ else
+   if [ -e "$homeDir/installer/shellscripts/haProxyConfig" ]
+   then
+       perl $homeDir/installer/shellscripts/haProxyConfig  ### Preparing content for haproxy.cfg file
+   else
+       echo "[Error] $homeDir/installer/shellscripts/haProxyConfig is missing" >> $logPath
+   fi
+ fi
+
+  ########## Editing Sudoers for apache user ################################
+  if [ -e "$homeDir/installer/shellscripts/editSudo.sh" ]
+  then
+      sudo $homeDir/installer/shellscripts/editSudo.sh
+  else
+      echo "[Error] $homeDir/installer/shellscripts/editSudo.sh is missing" >> $logPath
+  fi
+  ###############################################################################
+    
+
+  sudo chmod -R 777 $homeDir/installer
+  sudo chown -R www-data:www-data $homeDir/installer
+ 
+  if [ -e "$homeDir/installer/shellscripts/instances.dat" ]
+  then
+      sudo chmod 777 $homeDir/installer/shellscripts/instances.dat
+  else
+      echo "[Error] $homeDir/installer/shellscripts/instances.dat is missing" >> $logPath
+  fi
+
+  sudo chmod 777 /etc/haproxy/haproxy.cfg
+  sudo cp /etc/haproxy/haproxy.cfg  /etc/haproxy/haproxy.cfg_bk
+  sudo cat $homeDir/installer/shellscripts/haproxy.cfg  > /etc/haproxy/haproxy.cfg
+  sudo chmod 644 /etc/haproxy/haproxy.cfg
+  #sudo haproxy -f /etc/haproxy/haproxy.cfg >>$logPath 2>&1
+  #sudo  haproxy -V -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf >>$logPath 2>&1
+  sudo haproxy -f /etc/haproxy/haproxy.cfg -p /var/run/haproxy.pid -sf $(cat  /var/run/haproxy.pid)
+

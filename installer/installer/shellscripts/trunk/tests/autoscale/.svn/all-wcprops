@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/boto/boto/!svn/ver/1/trunk/tests/autoscale
+END
+test_connection.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/boto/boto/!svn/ver/1/trunk/tests/autoscale/test_connection.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/tests/autoscale/__init__.py
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/boto/boto/!svn/ver/1/trunk/tests/devpay
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/boto/boto/!svn/ver/1/trunk/tests/devpay/__init__.py
+END
+test_s3.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/tests/devpay/test_s3.py
+END

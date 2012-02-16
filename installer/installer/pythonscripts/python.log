@@ -1,0 +1,99 @@
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-184-73-17-162.compute-1.amazonaws.com having IP Address : 10.123.30.87
+DEBUG:root:Copying Files 
+DEBUG:root:Preparing Instance
+DEBUG:root:Calling Preparing Instance Script File
+INFO:root:Execution Command: ./home/ubuntu/installer/shellscripts/prepareinstance.sh on instance Instance:i-a5aafbc6 
+DEBUG:root:trying to setup SSH Connection
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-107-20-96-21.compute-1.amazonaws.com having IP Address : 10.123.54.115
+DEBUG:root:Copying Files 
+DEBUG:root:Preparing Instance
+DEBUG:root:Calling Preparing Instance Script File
+INFO:root:Execution Command: ./home/ubuntu/installer/shellscripts/prepareinstance.sh on instance Instance:i-45aeff26 
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-184-73-3-95.compute-1.amazonaws.com having IP Address : 10.124.151.175
+DEBUG:root:Copying Files 
+DEBUG:root:Preparing Instance
+DEBUG:root:Calling Preparing Instance Script File
+INFO:root:Execution Command: ./home/ubuntu/installer/shellscripts/prepareinstance.sh on instance Instance:i-4bd18028 
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-107-22-70-192.compute-1.amazonaws.com having IP Address : 10.86.146.181
+DEBUG:root:Copying Files 
+DEBUG:root:Preparing Instance
+DEBUG:root:Calling Preparing Instance Script File
+INFO:root:Execution Command: ./home/ubuntu/installer/shellscripts/prepareinstance.sh on instance Instance:i-a3dc8dc0 
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+INFO:root:Inside createinstance Method
+DEBUG:root:SQL Query : INSERT INTO instances (email,dns,ip,type) VALUES (aa@aa.com, abcd, 111,112, 12)
+ERROR:root:Entry Cannot be added to table. Details : (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '@aa.com, abcd, 111,112, 12)' at line 1")
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+INFO:root:Inside createinstance Method
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+INFO:root:Inside createinstance Method
+DEBUG:root:SQL Query : INSERT INTO instances (email,dns,ip,type) VALUES ('aa@aa.com', 'abcd', '111,112', '12')
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Destroying Mysql Connection
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+ERROR:root:System Cannot Proceed Ahead. Halting.
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Destroying Mysql Connection
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-184-72-92-199.compute-1.amazonaws.com having IP Address : 10.123.14.255
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Destroying Mysql Connection
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-184-73-84-156.compute-1.amazonaws.com having IP Address : 10.88.178.73
+DEBUG:root:Destroying Mysql Connection
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-107-20-41-98.compute-1.amazonaws.com having IP Address : 10.123.25.111
+ERROR:root:Exception in create command . Error : 'NoneType' object has no attribute 'createinstance'
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Destroying Mysql Connection
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Destroying Mysql Connection
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+DEBUG:root:Create Command Invoked With Params : ['/home/anand/workspace/ec2agent/src/awsmethods.py', 'create', 'test1', 'php', '1']
+DEBUG:root:Creating Mysql Connection
+DEBUG:root:Mysql Connection Successful
+INFO:root:Creating instance of type php size 1 and name test1 
+DEBUG:root:Starting an EC2 instance of type m1.large with image ami-fd4aa494
+DEBUG:root:Started the instance: ec2-107-20-96-21.compute-1.amazonaws.com having IP Address : 10.123.54.115
+ERROR:root:Exception in create command . Error : createinstance() takes exactly 5 arguments (6 given)

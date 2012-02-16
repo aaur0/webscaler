@@ -1,0 +1,1 @@
+sudo scp  -i /home/anand/Downloads/ag2.pem -r /home/anand/webscaler/server/* ubuntu@ec2-174-129-165-245.compute-1.amazonaws.com:/home/ubuntu/

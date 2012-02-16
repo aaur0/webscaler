@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/boto/boto/!svn/ver/1/trunk/tests/db
+END
+test_lists.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/boto/boto/!svn/ver/1/trunk/tests/db/test_lists.py
+END
+test_password.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/1/trunk/tests/db/test_password.py
+END
+test_query.py
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/boto/boto/!svn/ver/1/trunk/tests/db/test_query.py
+END
+test_sequence.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/1/trunk/tests/db/test_sequence.py
+END

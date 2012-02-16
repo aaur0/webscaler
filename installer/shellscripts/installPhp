@@ -1,0 +1,88 @@
+#!/bin/sh
+##########################################################################
+#This script installs PHP web server and deploy the customer artifacts...
+#
+##########################################################################
+homeDir="/root"
+logPath=$homeDir"/logs/phpinstall.log"
+custName=$1
+##errorlog() {
+
+   #error=`cat $logPath | egrep "Unable|Invalid|Error" | wc -l`
+   #if [ $error -ne 0 ]
+  # then
+#    echo "[Error while executing $1] .Please look into phpinstall.log for details"
+  #fi
+# }
+
+  if [ -e "$homeDir/installer/shellscripts/prepareinstance.sh" ]
+  then
+      sudo $homeDir/installer/shellscripts/prepareinstance.sh
+  else
+    echo "[Error] $homeDir/installer/shellscripts/prepareinstance.sh is not present" >> $logPath
+  fi
+  sudo apt-get update --assume-yes > $logPath 2>&1                ### Executing Update
+  #errorlog "apt-get update"
+  
+  sudo apt-get install php5 --assume-yes >> $logPath 2>&1        ### Installing PHP5
+  #errorlog "apt-get install php5" 
+  
+  sudo apt-get install php5-mysql  --assume-yes >> $logPath 2>&1  ### Installing Php5-mysql
+  #errorlog "apt-get install php5-mysql"
+  
+  sudo dpkg-reconfigure php5-mysql   >> $logPath 2>&1             ### depkging 
+  #errorlog "dpkg-reconfiguree php5-mysql"
+  
+  sudo chmod 777 /etc/apt/sources.list                                   
+  sudo sed 's/$/ multiversal/g' /etc/apt/sources.list > sources.list_temp   ### Editing sources.list. Adding multiversal
+  sudo sed 's/^ multiversal$//g' sources.list_temp > /etc/apt/sources.list 
+  sudo chmod 644 /etc/apt/sources.list       ### Restoring the file permission
+ 
+  ########## Editing Sudoers for apache user ################################
+  if [ -e "$homeDir/installer/shellscripts/editSudo.sh" ]
+  then 
+      sudo $homeDir/installer/shellscripts/editSudo.sh
+  else
+      echo "[Error] $homeDir/installer/shellscripts/editSudo.sh is missing" >> $logPath
+  fi
+  ###############################################################################
+ 
+  sudo chmod -R 777 $homeDir/installer
+  sudo chown -R www-data:www-data $homeDir/installer
+  
+  sudo cp -r $homeDir/userfiles/* /var/www/
+  sudo chmod 777 /var/www/*
+  
+  sudo touch $homeDir/installer/shellscripts/instances.dat 
+  sudo chmod 777 $homeDir/installer/shellscripts/instances.dat
+  sudo rm /var/www/index.html  ### removing the default index.html
+  sudo mkdir /var/www/files  #### creating /var/www/files to store the user scripts
+
+  if [ -e "$homeDir/installer/shellscripts/deployScript" ]
+  then
+      echo "$homeDir/installer/shellscripts/deployScript $homeDir/userfiles/$custName/webserver.tar /var/www/" >> $logPath
+      sudo $homeDir/installer/shellscripts/deployScript $homeDir/userfiles/$custName/webserver.tar /var/www/   ### Copying scripts in /var/www
+   else
+     echo "[Error] $homeDir/installer/shellscripts/deployScript is missing" >> $logPath
+   fi
+
+  if [ -e "$homeDir/installer/shellscripts/updateConfig" ]
+  then
+  sudo $homeDir/installer/shellscripts/updateConfig /var/www/dbconfig.php  $homeDir/installer/shellscripts/instances.dat ###updating dbconfig.php with database private ip
+  else
+    echo "[Error] $homeDir/installer/shellscripts/updateConfig is missing" >> $logPath
+  fi
+
+if [ -e "$homeDir/installer/shellscripts/updateConfig" ]
+  then
+  sudo $homeDir/installer/shellscripts/updateConfig $homeDir/installer/pythonscripts/dblayer.py  $homeDir/installer/shellscripts/instances.dat ###updating dbconfig.php with database private ip
+  else
+    echo "[Error] $homeDir/installer/shellscripts/updateConfig is missing" >> $logPath
+  fi
+
+
+  sudo chmod 777 /var/www/*    ### setting 777 in /var/www
+
+  sudo /etc/init.d/apache2 restart   >> $logPath 2>&1   ### Restarting apache
+
+

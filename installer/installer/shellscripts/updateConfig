@@ -1,0 +1,25 @@
+#!/bin/sh
+logPath="/home/ubuntu/phpinstall.log"
+if [ $# -ne 2 ]
+then
+  echo "Insufficient Parameters!! Execute script as"
+  echo "./<scriptName> <configFilePath> <databaseConfigFile>"
+  exit
+fi
+configFile=$1
+dbconfigFile=$2
+ip=`grep -i mysql $dbconfigFile | cut -d'=' -f2 | sed 's/[ \t]*//g'` 
+
+#dbname=$3
+username="root"
+password="root"
+
+sed -e "s#<IPADDRESS>#\"$ip\"#g" $configFile >tmp
+mv tmp $configFile
+#sed -e "s#<DBNAME>#$dbname#g" $configFile >tmp
+#mv tmp $configFile
+sed -e "s#<USERNAME>#$username#g" $configFile >tmp
+mv tmp $configFile
+sed -e "s#<PASSWORD>#$password#g" $configFile >tmp
+mv tmp $configFile
+echo "Config file updated" >> $logPath 2>&1

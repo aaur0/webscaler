@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/boto/boto/!svn/ver/1/trunk/boto/roboto
+END
+awsqueryrequest.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/boto/boto/!svn/ver/1/trunk/boto/roboto/awsqueryrequest.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/boto/roboto/__init__.py
+END
+param.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/boto/boto/!svn/ver/1/trunk/boto/roboto/param.py
+END
+awsqueryservice.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/boto/boto/!svn/ver/1/trunk/boto/roboto/awsqueryservice.py
+END

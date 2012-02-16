@@ -1,0 +1,45 @@
+#! /bin/sh
+
+if [ $# -ne 4 ]
+then
+echo "Execute script as ./<ScriptName> create <customerName> <installable-File-Path> <Size>"
+exit
+fi
+customerName=$2
+path=$3
+size=$4
+
+if [ -e "/home/ubuntu/installer/shellscripts/instances.dat" ]
+then
+  `sudo rm  /home/ubuntu/installer/shellscripts/instances.dat`
+fi
+chmod 600 /home/ubuntu/installer/pythonscripts/ag2.pem
+cmd="python "$path"/awsmethods.py create "$customerName" mysql "$size
+echo "Creating Mysql Server\n "$cmd >>  /tmp/outputfile
+var=`$cmd`
+echo $var
+echo "Created MySql Server " >>/tmp/outputfile
+
+cmd="python "$path"/awsmethods.py create "$customerName" php "$size
+echo "Creating WebServer1 "$cmd >>  /tmp/outputfile
+var=`$cmd`
+echo $var
+echo "Created WebServer1 Server " >>/tmp/outputfile
+
+cmd="python "$path"/awsmethods.py create "$customerName" php "$size
+echo "Creating WebServer2 "$cmd >>  /tmp/outputfile
+var=`$cmd`
+echo $var
+echo "Created WebServer2 Server " >>/tmp/outputfile
+
+perl /home/ubuntu/installer/shellscripts/haProxyConfig
+
+
+
+cmd="python "$path"/awsmethods.py create "$customerName" lb "$size
+echo "Creating LoadBalancer "$cmd >>  /tmp/outputfile
+var=`$cmd`
+echo $var
+echo "Created LoadBalancer Server " >>/tmp/outputfile
+
+

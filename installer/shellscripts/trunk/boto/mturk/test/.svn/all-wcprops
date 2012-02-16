@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test
+END
+hit_persistence.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/hit_persistence.py
+END
+create_hit_binary.doctest
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/create_hit_binary.doctest
+END
+common.py
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/common.py
+END
+reviewable_hits.doctest
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/reviewable_hits.doctest
+END
+all_tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/all_tests.py
+END
+create_hit_with_qualifications.py
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/create_hit_with_qualifications.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/__init__.py
+END
+create_hit_test.py
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/create_hit_test.py
+END
+create_free_text_question_regex.doctest
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/create_free_text_question_regex.doctest
+END
+test_disable_hit.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/test_disable_hit.py
+END
+run-doctest.py
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/run-doctest.py
+END
+create_hit_external.py
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/create_hit_external.py
+END
+cleanup_tests.py
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/cleanup_tests.py
+END
+search_hits.doctest
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/search_hits.doctest
+END
+mocks.py
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/mocks.py
+END
+create_hit_from_hit_type.doctest
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/create_hit_from_hit_type.doctest
+END
+support.py
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/support.py
+END
+selenium_support.py
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/selenium_support.py
+END
+.gitignore
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/.gitignore
+END
+create_hit.doctest
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/create_hit.doctest
+END
+_init_environment.py
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/boto/boto/!svn/ver/1/trunk/boto/mturk/test/_init_environment.py
+END

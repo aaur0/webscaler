@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+
+if(@ARGV !=3)
+{
+print "\n Execute the script as ./<scriptName> hostname  IPAddress Port \n";
+exit;
+
+}else{
+
+my $hostname=$ARGV[0];
+my $ip=$ARGV[1];
+my $port=$ARGV[2];
+my $strg="";
+my $ctr=0;
+my $flag=0;
+my $tmpStrg="";
+open(Proxy_File,"/etc/haproxy/haproxy.cfg");
+       while(<Proxy_File>)
+       {
+         $strg.=$_;
+         if($_ =~ /0.0.0.0:10010/)
+         {
+               $ctr=1;
+               $flag=1;
+         }   
+
+         if( ($ctr==1) && ($_ =~ m/server/) && ($strg =~ m/(\d+)\.(\d+)\.(\d+)\.(\d+)\:(\d+)/))
+         {
+          $ctr=0;
+          $strg.="        server  $hostname $ip:$port cookie app1inst1 check inter 2000 rise 2 fall 5 \n";
+         }
+       }
+close(Proxy_File);
+
+if($flag==0) ### Entry is not present at all
+{
+  $tmpStrg="listen web-farm 0.0.0.0:10010
+            mode http
+            balance roundrobin
+            option httpchk HEAD /index.php HTTP/1.0
+            server $hostname $ip:$port maxconn 5";
+   $strg=$strg."\n".$tmpStrg;
+
+}
+open(Proxy_File,">/etc/haproxy/haproxy.cfg");   ### Writing back the file content
+print Proxy_File $strg;
+close(Proxy_File);
+
+}

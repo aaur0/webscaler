@@ -1,0 +1,66 @@
+#!/usr/bin/perl
+my $strg="";
+my $hostname="";
+my $ip="";
+open(FP_CFG,"/home/ubuntu/installer/shellscripts/instances.dat");
+
+while(<FP_CFG>)
+ {
+  if($_ =~ /php/)
+  {  
+    $_ =~ m/([a-zA-Z0-9\.\-]+)[ \t]+([0-9\.]+).*/;
+    $hostname=$1;
+    $ip=$2;
+    if(($hostname ne "")&& ($ip ne ""))
+    {
+     $strg.="server $hostname  $ip:80 maxconn 10\n";
+    }
+    $hostname="";$ip="";
+  }
+ }
+close(FP_CFG); 
+
+ $strg="\# this config needs haproxy-1.1.28 or haproxy-1.2.1 
+global
+        nbproc 1
+        log 127.0.0.1   local0
+        log 127.0.0.1   local1 notice
+        \#log loghost    local0 info
+        maxconn 4096
+        \#chroot /usr/share/haproxy
+        user haproxy
+        group haproxy
+        daemon
+        pidfile /var/run/haproxy.pid
+        stats socket /home/ubuntu/haproxy.sock
+        \#debug
+        quiet
+
+defaults
+        log     global
+        mode    http
+        option  httplog
+        option  dontlognull
+        retries 3
+        option redispatch
+        maxconn 2000
+        contimeout      5000
+        clitimeout      50000
+        srvtimeout      50000
+
+listen webstats
+        bind 0.0.0.0:1000
+        stats enable
+        mode http
+        stats uri /lb?stats
+        stats auth anand:anand
+ 
+listen web-farm 0.0.0.0:80
+             mode http
+             balance roundrobin
+             option httpchk HEAD /index.php HTTP/1.0\n".$strg;
+
+open(FILE,">/home/ubuntu/installer/shellscripts/haproxy.cfg");
+print FILE $strg;
+close(FILE);
+

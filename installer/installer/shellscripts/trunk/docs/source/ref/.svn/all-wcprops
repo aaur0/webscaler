@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/boto/boto/!svn/ver/1/trunk/docs/source/ref
+END
+sdb.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/sdb.rst
+END
+gs.rst
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/gs.rst
+END
+ec2.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/ec2.rst
+END
+sts.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/sts.rst
+END
+ecs.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/ecs.rst
+END
+pyami.rst
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/pyami.rst
+END
+file.rst
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/file.rst
+END
+cloudfront.rst
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/cloudfront.rst
+END
+mashups.rst
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/mashups.rst
+END
+emr.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/emr.rst
+END
+services.rst
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/services.rst
+END
+cloudformation.rst
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/cloudformation.rst
+END
+s3.rst
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/s3.rst
+END
+manage.rst
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/manage.rst
+END
+fps.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/fps.rst
+END
+rds.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/rds.rst
+END
+vpc.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/vpc.rst
+END
+ses.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/ses.rst
+END
+contrib.rst
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/contrib.rst
+END
+mturk.rst
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/mturk.rst
+END
+boto.rst
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/boto.rst
+END
+sns.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/sns.rst
+END
+iam.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/iam.rst
+END
+route53.rst
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/route53.rst
+END
+sqs.rst
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/sqs.rst
+END
+index.rst
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/boto/boto/!svn/ver/1/trunk/docs/source/ref/index.rst
+END

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [ $# -ne 2 ]
+then
+   echo "Execute as ./scriptName <dns-name|private-ip to be removed> <inputFile>" 
+   exit
+fi
+
+dns=$1
+file=$2
+
+`grep -v $dns $file > tmp`
+`mv tmp $file`
+

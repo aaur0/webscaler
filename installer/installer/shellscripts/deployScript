@@ -1,0 +1,22 @@
+#!/bin/sh
+logPath="/home/ubuntu/phpinstall.log"
+if [ $# -ne 2 ]
+then
+  echo "Execute script as ./<scriptName> <ArtifactPath> <TargetPath> "
+  exit
+fi
+
+sourcePath=$1
+destinPath=$2
+path=`echo ${sourcePath%/*}`
+filename=`basename $sourcePath`
+extension=${filename##*.}
+echo "Path="$sourcePath" filename="$filename" extn="$extension 
+echo "Destination="$destinPath
+cd $destinPath
+echo `pwd`
+sudo cp $sourcePath . 
+echo `ls -lrt`
+sudo tar -xvf $filename >> $logPath 2>&1
+sudo chmod -R 777 *  >> $logPath 2>&1
+echo "Script Deployed at $destinPath" >> $logPath 2>&1
