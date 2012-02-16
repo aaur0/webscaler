@@ -41,8 +41,8 @@ class AWS():
             self.keyfilefullpath = "%s/%s" % (self.keyfilepath, self.keyfilename)
             self.SSH_OPTS  = '-o StrictHostKeyChecking=no -i %s' % self.keyfilefullpath
             self.conn = self.connect()              
-            self.upscalethreshold=self.config.get("euca", "upscalethreshold")
-            self.downscaletime=self.config.get("euca", "downscaletime")
+            self.upscalethreshold=int(self.config.get("euca", "upscalethreshold"))
+            self.downscaletime=int(self.config.get("euca", "downscaletime"))
         except Exception,e:
             logging.error("Error in init method:  %s",str(e))       
             os.sys.exit()
@@ -375,7 +375,7 @@ class AWS():
                                 emailid = self.db.getemailbydns(dns)
                                 logging.info("Email id fetched : %s", str(emailid))
                                 logging.info("Triggering Upscale: New instance of type PHP will be created.")
-                                self.createInstance(self.conn, 1, emailid.strip(), "php")
+                                self.createInstance(0, emailid.strip(), "php")
                                 # notify haproxy and restart it
                                 logging.info("Notifying HaProxy.")
                                 self.execute(self.conn, instance, "/root/installer/"+self.iscripts["lb"])                                                       
@@ -564,7 +564,7 @@ class AWS():
              
         
 if __name__ == "__main__":
-    logging.basicConfig(filename='python.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')    
+    logging.basicConfig(filename='/root/logs/python.log',level=logging.DEBUG,format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')    
     logging.getLogger('boto').setLevel(logging.CRITICAL)
     logging.getLogger('paramiko').setLevel(logging.CRITICAL)
     aws = AWS()            
