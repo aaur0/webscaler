@@ -1,4 +1,0 @@
-mysql=10.123.25.111
-ec2-184-72-92-199.compute-1.amazonaws.com 10.123.14.255 php
-ec2-50-16-128-85.compute-1.amazonaws.com 10.123.17.43 php
-ec2-107-22-147-117.compute-1.amazonaws.com 10.123.33.33 lb
