@@ -1,2 +1,0 @@
-python /home/ubuntu/installer/pythonscripts/awsmethods.py  monitor  ec2-107-22-12-30.compute-1.amazonaws.com stat
-sudo ab -n 100000 C 1000 <Load_Balancer_IP>/index.php
