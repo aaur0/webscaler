@@ -189,8 +189,8 @@ class EmrConnection(AWSQueryConnection):
         return self.get_object('ModifyInstanceGroups', params, ModifyInstanceGroupsResponse, verb='POST')
 
     def run_jobflow(self, name, log_uri, ec2_keyname=None, availability_zone=None,
-                    master_instance_type='m1.small',
-                    slave_instance_type='m1.small', num_instances=1,
+                    main_instance_type='m1.small',
+                    subordinate_instance_type='m1.small', num_instances=1,
                     action_on_failure='TERMINATE_JOB_FLOW', keep_alive=False,
                     enable_debugging=False,
                     hadoop_version='0.20',
@@ -209,10 +209,10 @@ class EmrConnection(AWSQueryConnection):
         :param ec2_keyname: EC2 key used for the instances
         :type availability_zone: str
         :param availability_zone: EC2 availability zone of the cluster
-        :type master_instance_type: str
-        :param master_instance_type: EC2 instance type of the master
-        :type slave_instance_type: str
-        :param slave_instance_type: EC2 instance type of the slave nodes
+        :type main_instance_type: str
+        :param main_instance_type: EC2 instance type of the main
+        :type subordinate_instance_type: str
+        :param subordinate_instance_type: EC2 instance type of the subordinate nodes
         :type num_instances: int
         :param num_instances: Number of instances in the Hadoop cluster
         :type action_on_failure: str
@@ -228,7 +228,7 @@ class EmrConnection(AWSQueryConnection):
         :type instance_groups: list(boto.emr.InstanceGroup)
         :param instance_groups: Optional list of instance groups to use when creating
                       this job. NB: When provided, this argument supersedes
-                      num_instances and master/slave_instance_type.
+                      num_instances and main/subordinate_instance_type.
         :type additional_info: JSON str
         :param additional_info: A JSON string for selecting additional features
         :rtype: str
@@ -247,15 +247,15 @@ class EmrConnection(AWSQueryConnection):
         params.update(common_params)
 
         # NB: according to the AWS API's error message, we must
-        # "configure instances either using instance count, master and
-        # slave instance type or instance groups but not both."
+        # "configure instances either using instance count, main and
+        # subordinate instance type or instance groups but not both."
         #
         # Thus we switch here on the truthiness of instance_groups.
         if not instance_groups:
             # Instance args (the common case)
             instance_params = self._build_instance_count_and_type_args(
-                                                        master_instance_type,
-                                                        slave_instance_type,
+                                                        main_instance_type,
+                                                        subordinate_instance_type,
                                                         num_instances)
             params.update(instance_params)
         else:
@@ -379,16 +379,16 @@ class EmrConnection(AWSQueryConnection):
 
         return params
 
-    def _build_instance_count_and_type_args(self, master_instance_type,
-                                            slave_instance_type, num_instances):
+    def _build_instance_count_and_type_args(self, main_instance_type,
+                                            subordinate_instance_type, num_instances):
         """
-        Takes a master instance type (string), a slave instance type
+        Takes a main instance type (string), a subordinate instance type
         (string), and a number of instances. Returns a comparable dict
         for use in making a RunJobFlow request.
         """
         params = {
-            'Instances.MasterInstanceType' : master_instance_type,
-            'Instances.SlaveInstanceType' : slave_instance_type,
+            'Instances.MainInstanceType' : main_instance_type,
+            'Instances.SubordinateInstanceType' : subordinate_instance_type,
             'Instances.InstanceCount' : num_instances,
             }
         return params
